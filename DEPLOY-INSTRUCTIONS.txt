@@ -1,0 +1,9 @@
+Training HQ deployment package
+
+Upload the contents of this package to the root of your Training-Hq GitHub repository. It contains public/ (static app files), src/index.js (Worker entry point), and wrangler.jsonc (deployment config).
+
+Cloudflare settings: Build command blank; Deploy command `npx wrangler deploy`; Preview command blank. Keep production branch `main`.
+
+The modal behavior change removes backdrop-click dismissal and labels the top-right button “✕ Close”. Existing explicit Cancel, Close, Save and action buttons remain. Escape does not close dialogs because no Escape handler is installed.
+
+Important: the app still stores workout data in browser localStorage per device. This does not enable cross-device sync. Before connecting/deploying, export a backup from the current app if you have important data. Review the deployment result before testing the live URL.
