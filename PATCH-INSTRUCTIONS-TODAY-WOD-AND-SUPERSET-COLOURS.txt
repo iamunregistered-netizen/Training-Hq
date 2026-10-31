@@ -1,0 +1,15 @@
+Deployment
+1. Export a JSON backup from Training HQ before replacing files.
+2. Extract this ZIP into your existing Cloudflare project directory, preserving wrangler.jsonc and src/index.js.
+3. Replace the matching project files with the files from this ZIP. The main deployed app is public/index.html; service worker is public/service-worker.js.
+4. Deploy using your usual Wrangler/Cloudflare workflow.
+5. Reopen the app. If the old interface remains, close the installed PWA/browser tab completely and reopen it so the v10 service worker can activate.
+
+Test
+- Log a WOD dated today and confirm its exercise rows appear on Home/Today.
+- Log a WOD dated a previous day and confirm it does not appear in today's section.
+- In Program, create two separate superset pairs in the same day. Confirm each pair has a different colour.
+- Open Log and confirm the matching exercises retain their respective pair colours.
+
+Data safety
+The app continues using localStorage key trainingHQ_v1. Do not clear browser storage or uninstall the app as part of deployment. Keep your JSON backup.

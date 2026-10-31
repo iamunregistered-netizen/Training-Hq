@@ -1,0 +1,9 @@
+Training HQ update: Today WOD display and superset colour differentiation
+
+1. WOD entries saved for the current date are now displayed on the Home/Today page beneath the planned exercise list, with exercise, WOD title/notes, sets, reps and load.
+2. Superset groups are assigned a deterministic palette colour based on their order in the programmed day. The first, second, third etc. superset pair each receive a distinct colour.
+3. Superset group labels identify the group number. The same group palette is applied to the corresponding exercise cards in the Log screen.
+4. Existing superset group IDs and WOD log records are retained; no local storage key or data schema migration is required.
+5. Service-worker cache version increased to training-hq-v10.
+
+Verification: Node JavaScript syntax checks passed for app.js and the embedded application script. ZIP integrity checked after packaging. Live browser/Cloudflare testing has not been performed.
