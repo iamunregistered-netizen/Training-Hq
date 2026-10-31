@@ -1,0 +1,10 @@
+Training HQ — Progressive ramp programming
+
+- Added a Progressive ramp option to each exercise in Program > edit day.
+- Progressive ramp stores a separate reps target and programmed load for each set.
+- Added a + control beside Sets. Each press adds another set / reps / load section and enables progressive-ramp mode.
+- Existing exercises remain in standard fixed-set mode unless Progressive ramp is enabled.
+- Progressive-ramp prescriptions prefill the matching set rows in the workout logger; users can still adjust actual completed reps and loads before saving.
+- Bumped the service-worker cache name to v12 so installed app clients can receive the updated interface.
+
+Validation: inline application JavaScript and service-worker JavaScript pass Node syntax checks; ZIP integrity checked. No live browser, device, or Cloudflare deployment test was performed.
