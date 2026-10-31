@@ -1,0 +1,19 @@
+Training HQ — Backup & Sync streamlining
+
+Changes
+- Replaced the separate Google Drive connect/backup workflow with a simpler Backup & Sync panel.
+- Added a dedicated Back up now action.
+- Added an Automatic backup toggle (enabled by default).
+- Local saves remain immediate. When automatic backup is enabled, Drive upload is debounced to about two minutes after the last change.
+- A successful upload updates the single latest backup file: Training HQ Backup.json.
+- A dated daily snapshot is created once per day: Training HQ Backup YYYY-MM-DD.json.
+- Added clear pending/synced/offline/error status messages.
+- Restore remains separate, validates the backup, and triggers a downloadable safety export before replacing local data.
+- Bumped service-worker cache version to v11.
+
+Important limitations
+- Google OAuth access tokens are deliberately kept in memory, not persisted in localStorage.
+- Google browser OAuth does not provide a durable background refresh token to this static client app. Automatic uploads therefore work while the app is open and Google authorisation is available; after a browser/app restart, Google may require the user to reconnect.
+- The browser cannot run scheduled backups while the app is closed. This is not a server-side backup service.
+- Dated daily snapshots are currently retained in Drive without automatic pruning.
+- This remains a personal Google Drive backup for the single-device/local-first app. It is not yet the central backup system for the proposed multi-user beta.
