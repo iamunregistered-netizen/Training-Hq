@@ -1,0 +1,10 @@
+Training HQ — Progressive Ramp Removed
+
+- Removed the Progressive Ramp checkbox and per-set prescription tables from the programming editor.
+- Removed ramp-specific editor logic and save handling.
+- Workout logging now uses the standard exercise prescription (sets, reps/duration, and programmed load) for every set.
+- Existing programs containing legacy progressiveRamp/setScheme fields remain readable; those obsolete fields are ignored and are not written back when the day is next saved.
+- No workout history/localStorage data is migrated or cleared by this source update.
+
+Validation: inline JavaScript syntax and service-worker syntax checked with Node.js; ZIP integrity checked.
+Not deployed or browser-tested.

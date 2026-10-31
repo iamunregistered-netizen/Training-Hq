@@ -1,0 +1,12 @@
+Training HQ — Always-on set-by-set programming
+
+- Removed the need to enable a separate progressive-ramp mode.
+- Every programmed exercise now displays one reps/load row per set in the Program editor.
+- Changing the Sets value automatically adds or removes matching rows (1–30).
+- Each set's reps and load are saved independently and prefilled into the workout logger.
+- Existing programs without set-specific prescriptions are migrated in the editor by creating rows from their existing default reps/load values.
+- Standard exercise defaults remain available and populate new rows; users can override individual rows.
+- No workout log history or localStorage data is cleared.
+
+Validation: inline JavaScript syntax and service-worker syntax checked with Node.js; ZIP integrity checked.
+Live browser and deployment testing have not been performed.

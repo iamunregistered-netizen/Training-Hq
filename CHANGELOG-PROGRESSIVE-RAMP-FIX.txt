@@ -1,0 +1,11 @@
+Training HQ — Progressive Ramp editor correction
+
+- Removed the separate + Add set control from the Programming editor.
+- When Progressive ramp is enabled, the Sets number now controls the number of per-set reps/load rows automatically.
+- Changing Sets adds or removes rows to match the entered count; set labels are renumbered.
+- Sets remains editable while Progressive ramp is enabled.
+- Removed the duplicated reps/duration and programmed-load prescription from the top of each workout-log exercise card. Per-set fields remain the place to view/edit those values.
+- Existing standard (non-ramp) programming remains unchanged.
+
+Validation: inline application JavaScript parsed with Node; service worker passed node --check; ZIP integrity checked.
+No live browser, sync, or deployment test was performed.
