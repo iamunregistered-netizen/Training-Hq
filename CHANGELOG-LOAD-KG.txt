@@ -1,0 +1,8 @@
+Training HQ update: Programmed loads in the day editor now use kilograms instead of percentages.
+- Exercise programming field is now 'Programmed load (kg; 0 = bodyweight/unweighted)'.
+- Programmed kilogram loads are shown in the planned session and suggested as the starting load in workout logging.
+- Existing percentage-based items can be converted to kg when their relevant reference max is available.
+- Existing workout history and localStorage key remain unchanged.
+- Service worker cache version bumped to refresh the app files on deployment.
+
+Deploy by replacing the files in your Cloudflare project's public/ folder with the files in this package, then deploy. Do not clear browser/app storage.

@@ -1,0 +1,7 @@
+Custom progression engine update
+- Added a per-week fixed load change in kilograms alongside the existing intensity percentage and volume percentage fields.
+- Set load change to 0 kg to retain intensity-based progression.
+- A non-zero kg change is added to the exercise's programmed kg load and takes precedence over intensity scaling for that week.
+- Volume scaling and exercise history remain unchanged.
+- Existing saved custom engines default to 0 kg change and continue to behave as before.
+- JavaScript syntax and ZIP integrity checked; live browser testing not performed.

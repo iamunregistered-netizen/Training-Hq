@@ -1,0 +1,25 @@
+TRAINING HQ — SUPERSET PROGRAMMING UPDATE
+
+Programming
+- In the day editor, swipe an exercise card left to insert a linked secondary exercise directly after it.
+- Enter the secondary exercise's name, sets, reps, load, rest and duration using the same fields as a normal exercise.
+- Both cards are marked SUPERSET PAIR and saved with a shared pair identifier. Existing exercises are unchanged.
+- Drag/reorder remains available using the drag handle. Keep paired exercises adjacent in the program for the intended A/B sequence.
+
+Logging
+- Superset exercises receive a distinct purple treatment and SUPERSET label.
+- Swipe left/right on a paired card to move focus to its partner.
+- Marking either partner complete marks both partners complete; both checklist states are saved.
+- The two exercise cards are presented in program order (A then B). Perform the sets alternating A1, B1, A2, B2, etc. Each exercise retains its own set-entry fields.
+
+Compatibility
+- Existing localStorage key and backup schema are unchanged. The supersetGroup field is additive and optional.
+- Service-worker cache version bumped to v8.
+
+Before deployment
+1. Export a JSON backup from Training HQ.
+2. Deploy the project files in this ZIP to the existing Cloudflare project.
+3. Reopen/refresh the app so the new service worker activates.
+4. Test with a non-critical day: swipe left on one exercise in Programming, fill in the partner, save, then open Log.
+
+Testing performed: JavaScript syntax check and ZIP integrity check. Not yet verified in a live browser/device or against the live Cloudflare deployment.

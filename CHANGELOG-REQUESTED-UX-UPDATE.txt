@@ -1,0 +1,20 @@
+Training HQ requested UX update
+
+Included in this package:
+- WOD image recognition is intentionally deferred; no OCR or image-to-workout conversion is included.
+- Session note field remains removed.
+- Rest timer panels can be minimised/expanded.
+- Completed exercise details can be collapsed and expanded using the new control.
+- Per-exercise photo attachment control is now visible in Log; selected image is saved as photoNote with the exercise log entry.
+- Service worker cache version bumped to v7.
+
+Not included yet:
+- Superset programming and alternating A1-B1-A2-B2 logging. This needs a coordinated data model and log UI change; this ZIP does not claim to implement it.
+
+Deployment safety:
+1. Export a JSON backup from the current app before deployment.
+2. Deploy the contents of this ZIP to the existing Cloudflare project.
+3. Reload the app. If an old screen remains cached, close the app/browser tab and reopen it after the service worker updates.
+4. Test a photo note with a non-critical exercise and confirm it appears in the saved log before relying on it.
+
+Existing localStorage key and existing data structure are retained. Photo files are stored as data URLs in log records and can increase local storage usage; use compressed photos where possible.

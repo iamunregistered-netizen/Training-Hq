@@ -1,0 +1,11 @@
+Training HQ — Log and Programming UX update
+
+1. Individual exercise cards in the Log can be expanded or minimised independently. Completed exercises can also be expanded again; collapse state is per card for the open logging session.
+2. Programming editor now has a visible “+ Superset” button on each exercise. It inserts a paired secondary exercise immediately after the selected exercise, with its own sets, reps, load, progression increment, rest and duration fields. Existing touch swipe gesture remains available.
+3. Superset group identifiers are retained when saving the programmed day. Superset exercises receive a distinct purple treatment in the Log. Completing one member marks its paired member complete as well.
+4. Added “Log WOD” beside “Log workout”. Users can attach a screenshot/photo for reference and manually add any number of movements with sets, reps/time/distance, load and scaling notes. Each movement is saved as a WOD log entry.
+5. Image recognition/OCR is intentionally not included. The uploaded image is stored as a reference attachment on the first WOD movement.
+
+Deployment: back up Training HQ JSON data first, replace the existing project files with this package, deploy to the existing Cloudflare Worker, then reload the app. Service worker cache version advanced to v9.
+
+Validation: inline JavaScript syntax checked with Node.js and ZIP integrity checked. No live browser or Cloudflare deployment test was performed.

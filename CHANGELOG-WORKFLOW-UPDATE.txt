@@ -1,0 +1,25 @@
+Training HQ — Workflow, Checklist, and kg Progression Update
+
+Based on the available training_hq_program_load_kg.zip project package.
+
+Changes:
+- Exercise completion checkboxes persist separately for each program, week, day, and exercise. Completed exercises receive a highlighted green background. Checklist state is stored in the main Training HQ data and included in JSON/Google Drive backups. A new week has a fresh checklist.
+- Programming editor now includes a per-exercise “Next-week increase (kg)” setting. When a workout is saved, the heaviest entered working weight for an exercise plus the configured increment is applied as that exercise’s prescription for the following week. This creates a week-specific override and leaves prior workout logs unchanged. Set the increment to 0 to disable this behavior. Only configured exercises with entered working weights progress automatically; running exercises are excluded.
+- Google Drive workflow is simplified to “Connect & back up” plus a separate “Restore from Drive…” action. Restore can connect to Google directly and asks for confirmation before replacing local data. OAuth access tokens remain in memory only and may need renewed authorisation later.
+- Service worker cache version bumped to v5 to encourage clients to fetch the updated app.
+
+Important:
+- Existing localStorage key trainingHQ_v1 is retained. The app adds fields without changing the key or deleting old logs/programs.
+- Export a JSON backup before deployment. Test the deployed update using the existing Worker URL. Do not clear site storage or uninstall the PWA as part of updating.
+- The “Next-week increase” feature is opt-in per exercise. It does not change prior history. It only sets the following week’s load override when a workout has saved at least one positive working weight.
+- Google OAuth still requires a correctly configured Web Client ID and authorised JavaScript origin matching the deployed HTTPS origin.
+
+Validation performed in this package build:
+- JavaScript syntax checked with Node.js `node --check`.
+- ZIP structure and required deployment files verified.
+- This is a static validation, not a live browser or Google OAuth end-to-end test.
+
+Front-page completion highlighting (2026-10-29)
+- Planned exercise rows on the Home/front page now highlight in green and show a DONE badge plus “Completed” when a matching completed log exists for the selected program, week, and day.
+- Matching is case-insensitive by exercise name and does not alter stored workout logs or completion records.
+- The highlight updates when the Home view renders after a workout is saved.
