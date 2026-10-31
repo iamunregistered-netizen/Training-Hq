@@ -1,0 +1,10 @@
+Training HQ — Superset toggle behaviour
+
+- The Program editor's Superset button now toggles the link on and off.
+- When an exercise is already linked, selecting “− Remove Superset” clears the shared superset group from both linked exercise cards. Both exercises remain in the programme as independent exercises.
+- Removing either exercise window also clears the superset group from its partner, so the remaining exercise becomes independent rather than retaining a broken link.
+- Both linked cards display the active pair colour and numbered label; after unlinking, the colour and label are removed.
+- The action is available from either member of the pair.
+- Existing exercise prescriptions, ramp rows, and other programme data are preserved.
+
+Validation: embedded application JavaScript and service worker pass Node syntax checks. ZIP integrity checked. Live browser/device testing not performed.
