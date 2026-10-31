@@ -1,4 +1,4 @@
-const CACHE_NAME = 'training-hq-v6';
+const CACHE_NAME = 'training-hq-v8';
 const APP_FILES = ['/', './manifest.json', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
