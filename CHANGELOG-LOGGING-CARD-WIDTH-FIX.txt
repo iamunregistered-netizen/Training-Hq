@@ -1,0 +1,9 @@
+Training HQ — logging card width and stacking fix
+
+- Fixed malformed exercise-card HTML in the workout logging renderer.
+- Each exercise card now closes both its collapsible content region and its outer card container.
+- This ensures all exercise cards are direct siblings inside #workoutExercises rather than accidentally nesting later cards inside earlier cards.
+- With the existing full-width vertical flex layout, minimising an exercise now hides only its own entry fields; every card retains the same full width and cards cascade vertically.
+- Bumped service worker cache to v15 so clients fetch the corrected app assets.
+
+Validation: JavaScript syntax and ZIP integrity checks passed. No live browser/device test performed.
