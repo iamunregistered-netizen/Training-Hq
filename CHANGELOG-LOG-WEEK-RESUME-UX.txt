@@ -1,0 +1,8 @@
+Training HQ — Logging layout, week completion and resume-day update
+
+1. Logging exercise cards now use a full-width vertical stack. Minimising a card hides only its entry fields; it does not shrink the card or cause neighbouring cards to flow into narrower columns.
+2. Added a Home-screen week progression control. It advances the active program from Week 1–11 to the next week, and from Week 12 to a fresh Week 1 cycle. The control is disabled while viewing a non-current week. Existing workout history is retained. A confirmation prompt explains the action before changing the active week.
+3. Saving a workout records the last logged day, program, week and date. On the next app launch, the app selects that day when the saved program is still active. Existing users without this saved value continue to open on the current weekday.
+4. Service worker cache bumped to v14 so the browser can fetch the updated app files.
+
+Validation: JavaScript syntax and ZIP integrity checks passed. No live browser/device test was performed.
