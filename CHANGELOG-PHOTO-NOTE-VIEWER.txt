@@ -1,0 +1,7 @@
+Training HQ – Photo Note Viewer
+
+- Added a “View photo note” control to recent activity and the full training history for log entries containing an attached photo.
+- Selecting the control opens the saved image in a larger, contained modal viewer with a close action.
+- Works for exercise log photos and WOD photo attachments (WOD image is attached to the first WOD exercise record).
+- Existing logs without photos remain unchanged.
+- Service worker cache version bumped to v16.
