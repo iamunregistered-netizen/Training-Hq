@@ -1,0 +1,18 @@
+Training HQ – External Program Import
+
+Added to the Programs section:
+- Import a standalone Training HQ program JSON file as a separate program.
+- Import a full Training HQ backup JSON and choose one program to add without replacing existing data.
+- Import a CSV exercise plan using columns: day, exercise, sets, reps, pct, load_kg, rest_times, session_type.
+- Imported programs receive a unique name if a program with the same name already exists.
+- Imported exercises retain supported prescriptions including sets, reps, percentage, kg load, rest, duration, ramp settings and superset grouping when present in JSON.
+- The imported program becomes active and starts at Week 1; existing workout logs and other programs are retained.
+- Added Export this program to create a reusable Training HQ program JSON file.
+
+CSV example:
+day,exercise,sets,reps,pct,load_kg,rest_times,session_type
+Monday,Back squat,4,5,75,,180,Strength
+Monday,Snatch,5,2,70,,120,Weightlifting
+Wednesday,Front squat,3,5,,100,180,Strength
+
+Validation: inline JavaScript syntax and ZIP integrity checked. No live browser test performed.
