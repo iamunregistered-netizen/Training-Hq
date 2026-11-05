@@ -1,0 +1,7 @@
+Training HQ — Unified Program Import
+
+- Replaced the separate Import screenshot and Import program buttons with one Import entry point.
+- The unified chooser clearly routes users to screenshot OCR or structured program-file import.
+- Existing screenshot OCR review, destination-program selection and append/replace modes are preserved.
+- Existing JSON/CSV program import, backup program selection and separate-program creation are preserved.
+- Existing programs and workout history are not replaced by either import path.
