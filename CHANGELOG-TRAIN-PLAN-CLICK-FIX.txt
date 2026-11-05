@@ -1,0 +1,10 @@
+TRAIN / PLAN CLICK FIX
+
+Root cause: the deployed index.html contains the active application JavaScript inline, but the previous patch had updated the separate app-inline.js file only. The buttons existed in the HTML but their handlers were absent from the script actually executed by the browser.
+
+Fix:
+- Added Train and Plan click handlers to the active inline application script.
+- Updated navigation to show the unified Training parent and switch between the Train and Plan panels.
+- Kept progress and settings navigation working.
+- Synchronized app-inline.js with the active inline source to prevent future divergence.
+- Bumped service-worker cache to v26.
