@@ -1,0 +1,15 @@
+Training HQ — Train / Plan navigation fix
+
+Root cause: the combined Training page used nested <main> elements for the Train and Plan panels. The HTML parser automatically closes an open <main> when another <main> starts, which broke the intended panel nesting and prevented the mode buttons from reliably switching the visible content.
+
+Changes:
+- Replaced the nested page-home and page-program <main> elements with semantic <section> elements.
+- Preserved the outer Training, Progress and Settings main landmarks.
+- Bumped the service-worker cache to training-hq-v25 so clients fetch the corrected HTML.
+
+Validation performed:
+- Inline page JavaScript syntax check passed.
+- app-inline.js syntax check passed.
+- Worker and service-worker syntax checks passed.
+- ZIP integrity check passed.
+- No live browser or Cloudflare deployment test performed.
