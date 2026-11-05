@@ -1,0 +1,7 @@
+Training HQ — Manual Week Programming Activation Fix
+
+The previous package updated app-inline.js, but the deployed page executes the JavaScript embedded in public/index.html. The new controls and logic were therefore not active in the running app.
+
+This fix applies the feature implementation to the actual public/index.html runtime: exercise Main/Accessory selector and persistence, week selector, Add week modal, blank/copy options, selective Main/Accessory copying, per-week independent day plans, and extended week handling in workout logging.
+
+Preserved the Delete Program action and unified Import workflow. Service worker cache: training-hq-v23.
