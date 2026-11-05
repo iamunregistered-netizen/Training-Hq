@@ -1,0 +1,6 @@
+Restored Delete this program in the Program library.
+- Adds a delete control beside Export.
+- Requires confirmation and reports how many historical logs will be retained.
+- Preserves workout logs; removes only the selected program and its progression settings.
+- Automatically switches to another program after deletion.
+- Prevents deletion when only one program remains.
