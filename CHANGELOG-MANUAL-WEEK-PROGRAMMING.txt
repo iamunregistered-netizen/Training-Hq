@@ -1,0 +1,11 @@
+Training HQ — Manual Week Programming
+
+- Added Main / Accessory role tagging to each programmed exercise. The role is saved with the exercise and used by the week-copy workflow.
+- Added a week selector to Program editing and an Add week action.
+- Added a create-week prompt with Copy previous week or Blank week.
+- When copying, users can select Main + Accessory, Main only, or Accessory only.
+- Added independent per-week day plans. Editing a week saves that week's session and exercise prescriptions without overwriting other weeks.
+- When editing a pre-existing engine-generated week for the first time, its generated prescriptions are used as the starting point; subsequent manual edits are stored independently and bypass the engine for that week.
+- Extended program week handling beyond 12 weeks and updated workout logging to accept the selected program's week range.
+- Existing programs and workout history are retained. Legacy exercises without a role default to Main until changed in the editor.
+- Service worker cache bumped to training-hq-v22.
