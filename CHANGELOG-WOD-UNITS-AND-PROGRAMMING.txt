@@ -1,0 +1,12 @@
+Training HQ — WOD unit types and programming support
+
+- Added selectable prescription units in the Program editor: reps, calories, metres, kilometres, seconds, minutes, rounds, shuttles, steps, watts, reps+metres, reps+calories, and no target unit.
+- Programmed non-rep targets now render as metric entry rows in the workout logger, with an optional load in kg and RPE. Metric values and units are saved with individual set records.
+- Added WOD workout formats to day programming: Standard, For time, AMRAP, EMOM, Rounds for time, Chipper, and Tabata/intervals, plus time cap/duration and target rounds.
+- The workout logger displays programmed WOD format, time cap and target rounds.
+- Expanded the standalone Log WOD form with the same workout formats, time cap, target rounds, and per-movement unit selection.
+- Recent activity and Training History display metric values; CSV export includes metric_value and metric_unit.
+- Existing programs and logs remain compatible; existing items default to reps.
+- Service worker cache bumped to v19.
+
+Validation: inline application JavaScript and service worker JavaScript pass Node syntax checks. ZIP integrity checked after packaging. No live browser/device test performed.
