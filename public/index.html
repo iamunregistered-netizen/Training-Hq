@@ -204,7 +204,38 @@ function referenceMaxRowHTML(name='',value='',i=0){return `<div class="formgrid 
 function bindReferenceMaxRows(){document.querySelectorAll('[data-remove-ref]').forEach(b=>b.onclick=()=>{b.closest('.reference-max-row').remove()});}
 function addReferenceMaxRow(name='',value=''){const box=document.getElementById('referenceMaxRows');box.insertAdjacentHTML('beforeend',referenceMaxRowHTML(name,value,box.children.length));bindReferenceMaxRows();}
 function renderSettings(){document.getElementById('profileBodyweight').value=state.profile?.bodyweight||'';document.getElementById('profileAge').value=state.profile?.age||'';renderReferenceMaxRows();document.getElementById('currentWeek').value=activeWeek();document.getElementById('rounding').value=state.rounding}
-function navigate(page){currentPage=page;document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.page===page));['home','program','progress','settings'].forEach(p=>document.getElementById('page-'+p).classList.toggle('hidden',p!==page));if(page==='progress')renderProgress();window.scrollTo({top:0,behavior:'smooth'})}document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>navigate(t.dataset.page));
+function setTrainingMode(mode){
+ const plan=mode==='plan';
+ const trainPanel=document.getElementById('training-train');
+ const planPanel=document.getElementById('training-plan');
+ if(!trainPanel||!planPanel)return;
+ trainPanel.classList.toggle('hidden',plan);
+ planPanel.classList.toggle('hidden',!plan);
+ document.getElementById('trainingModeTrain')?.classList.toggle('primary',!plan);
+ document.getElementById('trainingModePlan')?.classList.toggle('primary',plan);
+ currentTrainingMode=plan?'plan':'train';
+ if(plan){renderProgram();}else{renderHome();}
+}
+let currentTrainingMode='train';
+function navigate(page){
+ if(page==='home'||page==='program'||page==='training'){
+  if(page==='program')currentTrainingMode='plan';
+  if(page==='home')currentTrainingMode='train';
+  page='training';
+ }
+ currentPage=page;
+ document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.page===page));
+ document.getElementById('page-training')?.classList.toggle('hidden',page!=='training');
+ document.getElementById('page-progress')?.classList.toggle('hidden',page!=='progress');
+ document.getElementById('page-settings')?.classList.toggle('hidden',page!=='settings');
+ if(page==='training')setTrainingMode(currentTrainingMode||'train');
+ if(page==='progress')renderProgress();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('trainingModeTrain')?.addEventListener('click',()=>setTrainingMode('train'));
+document.getElementById('trainingModePlan')?.addEventListener('click',()=>setTrainingMode('plan'));
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>navigate(t.dataset.page)));
+
 function modal(title,body,buttons){const root=document.getElementById('modalRoot');root.innerHTML=`<div style="position:fixed;inset:0;background:#000b;z-index:30;display:flex;align-items:flex-end;justify-content:center;padding:10px" id="modalShade"><div style="width:100%;max-width:650px;max-height:90dvh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px 16px calc(18px + env(safe-area-inset-bottom))"><div class="exercisehead" style="margin-bottom:16px"><h2>${esc(title)}</h2><button class="btn ghost" id="closeModal" type="button" aria-label="Close window">✕ Close</button></div><div id="modalBody">${body}</div><div class="btnrow" style="margin-top:16px" id="modalButtons"></div></div></div>`;document.getElementById('closeModal').onclick=closeModal;const bb=document.getElementById('modalButtons');buttons.forEach(b=>{const x=document.createElement('button');x.className=b.cls||'btn';x.textContent=b.label;x.onclick=b.action;bb.appendChild(x)})}function closeModal(){document.getElementById('modalRoot').innerHTML=''}
 function openDayEditor(day){const editWeek=activeWeek();const d=dayPlanForWeek(day,editWeek);editingDay=day;const body=`<div class="field"><label>Session focus</label><input id="edType" value="${esc(d.type)}"></div><div class="field"><label>Description</label><textarea id="edDesc">${esc(d.description)}</textarea></div><div class="formgrid"><div class="field"><label>Workout format</label><select id="edFormat"><option value="standard" ${!d.format||d.format==='standard'?'selected':''}>Standard session</option><option value="for-time" ${d.format==='for-time'?'selected':''}>For time</option><option value="amrap" ${d.format==='amrap'?'selected':''}>AMRAP</option><option value="emom" ${d.format==='emom'?'selected':''}>EMOM</option><option value="rft" ${d.format==='rft'?'selected':''}>Rounds for time</option><option value="chipper" ${d.format==='chipper'?'selected':''}>Chipper</option><option value="tabata" ${d.format==='tabata'?'selected':''}>Tabata / intervals</option></select></div><div class="field"><label>Time cap / duration (seconds)</label><input id="edTimeCap" type="number" min="0" value="${Number(d.timeCapSeconds)||0}" placeholder="e.g. 1200"></div><div class="field"><label>Target rounds (optional)</label><input id="edRounds" type="number" min="0" value="${Number(d.roundsTarget)||0}"></div></div><div id="editItems">${d.items.map((it,i)=>itemEditorHTML(it,i)).join('')}</div><button class="btn full" id="addProgramItem">＋ Add exercise</button>`;modal('Edit '+day,body,[{label:'Cancel',cls:'btn ghost',action:closeModal},{label:'Save day',cls:'btn primary',action:()=>{const type=document.getElementById('edType').value,description=document.getElementById('edDesc').value,format=document.getElementById('edFormat').value,timeCapSeconds=Math.max(0,Number(document.getElementById('edTimeCap').value)||0),roundsTarget=Math.max(0,Number(document.getElementById('edRounds').value)||0),items=[...document.querySelectorAll('#editItems .edititem')].map(el=>{const ramp=el.querySelector('[data-k=rampEnabled]')?.checked||false;const sets=Math.max(1,Math.min(30,Number(el.querySelector('[data-k=sets]').value)||1));const setScheme=ramp?[...el.querySelectorAll('[data-ramp-row]')].slice(0,sets).map(row=>({reps:row.querySelector('[data-ramp=reps]').value.trim(),loadKg:Math.max(0,Number(row.querySelector('[data-ramp=loadKg]').value)||0)})):[];return {name:el.querySelector('[data-k=name]').value.trim(),role:el.querySelector('[data-k=role]')?.value||'main',sets,reps:el.querySelector('[data-k=reps]').value.trim(),unitType:el.querySelector('[data-k=unitType]')?.value||'reps',loadKg:Math.max(0,Number(el.querySelector('[data-k=loadKg]').value)||0),loadIncrementKg:Math.max(0,Number(el.querySelector('[data-k=loadIncrementKg]').value)||0),pct:0,restTimes:el.querySelector('[data-k=restTimes]').value.trim(),durationSeconds:Math.max(0,Number(el.querySelector('[data-k=durationSeconds]').value)||0),progressiveRamp:ramp,setScheme,supersetGroup:el.dataset.supersetGroup||''}}).filter(x=>x.name);const plan={type,description,format,timeCapSeconds,roundsTarget,items};if(editWeek===1)active().days[day]=plan;else{ensureWeekPlan(editWeek)[day]=plan;}save();closeModal();render();toast(day+' saved')}}]);document.getElementById('addProgramItem').onclick=()=>{const container=document.getElementById('editItems');container.insertAdjacentHTML('beforeend',itemEditorHTML({name:'',role:'main',sets:3,reps:'10',pct:0},container.children.length));initRampEditor(container.lastElementChild);container.lastElementChild.querySelector('[data-k=name]').focus()};const editItems=document.getElementById('editItems');function refreshEditorSupersetStyles(){
  const cards=[...editItems.querySelectorAll('.edititem')];
