@@ -1,0 +1,9 @@
+Training HQ cross-device sync — setup (do once)
+1. Export a JSON backup from every device.
+2. npm i -D wrangler && npx wrangler login
+3. npx wrangler d1 create traininghq-db   -> copy database_id into wrangler.jsonc
+4. npx wrangler d1 execute traininghq-db --remote --file=schema.sql
+5. Cloudflare dashboard > Worker > Settings > Domains & Routes > workers.dev > enable Cloudflare Access; add a policy allowing only your email.
+6. npx wrangler deploy
+7. Open on PC, sign in, let it sync (uploads everything). Open on phone, sign in; choose OK on the "Cloud data was found" prompt to take the cloud copy.
+Notes: the Worker returns 401 unless Cloudflare Access is in front of it (set var ALLOW_NO_AUTH=1 only for local dev). Same-record edits on two devices: the later edit wins. Photos are not synced.

@@ -10,3 +10,5 @@ Training HQ — UX overhaul (cache v27)
 - All JS now lives in public/app.js (inline copy and app-inline.js/patch scripts removed).
 Not included: undo toasts, in-app confirm dialogs, onboarding, sticky rest timer / tap-to-confirm sets / last-time hints, session progress counter.
 Validation: node --check only; no live browser test.
+
+Cross-device sync added (v28): see SETUP-SYNC.txt. Files: schema.sql, src/index.js (/api/sync), public/sync.js, Settings > Cross-device sync card. Syntax-checked only.
