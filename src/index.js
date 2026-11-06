@@ -5,6 +5,19 @@ const UPSERT = `INSERT INTO records (kind,id,data,updated_at,deleted,server_time
     deleted=excluded.deleted, server_time=excluded.server_time
   WHERE excluded.updated_at > records.updated_at`;
 
+let ready = false;
+async function ensureSchema(env) {
+  if (ready) return;
+  await env.DB.batch([
+    env.DB.prepare(`CREATE TABLE IF NOT EXISTS records (
+      kind TEXT NOT NULL, id TEXT NOT NULL, data TEXT NOT NULL,
+      updated_at INTEGER NOT NULL, deleted INTEGER NOT NULL DEFAULT 0,
+      server_time INTEGER NOT NULL, PRIMARY KEY (kind, id))`),
+    env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_server_time ON records(server_time)')
+  ]);
+  ready = true;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -22,6 +35,7 @@ export default {
 async function sync(request, env) {
   let body;
   try { body = await request.json(); } catch { return new Response('Bad JSON', { status: 400 }); }
+  await ensureSchema(env);
   const { since = 0, changes = [], pull = true } = body;
   const now = Date.now();
   const stmts = [];
