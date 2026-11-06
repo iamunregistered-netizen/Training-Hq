@@ -1,0 +1,12 @@
+Training HQ — UX overhaul (cache v27)
+- Today-first: session + Start workout at top; program picker, week selector, stats, comparison and Complete week moved into a collapsible overview.
+- Complete week demoted to a secondary button inside the overview.
+- Main nav is now Today / Plan / Progress / Settings; the Train/Plan toggle is hidden.
+- Start workout is the single primary action; Log a WOD and Edit today's plan are under More.
+- Labels: Settings, Your maxes (1RM); Google client ID under Advanced; Plan import paragraph removed.
+- Stat tiles, best-lift tiles and chart dropdown now follow the user's own lifts/logs.
+- Header pill shows backup state and opens Settings.
+- Numeric inputs use the decimal keypad; 44px touch targets; dialog roles; Escape closes modals; focus outlines.
+- All JS now lives in public/app.js (inline copy and app-inline.js/patch scripts removed).
+Not included: undo toasts, in-app confirm dialogs, onboarding, sticky rest timer / tap-to-confirm sets / last-time hints, session progress counter.
+Validation: node --check only; no live browser test.
