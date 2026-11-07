@@ -1,4 +1,4 @@
-const CACHE_NAME = 'training-hq-v29';
+const CACHE_NAME = 'training-hq-v31';
 const APP_FILES = ['/', './manifest.json', './icon-192.png', './icon-512.png', './app.js', './sync.js'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
@@ -8,10 +8,11 @@ self.addEventListener('activate', event => {
 });
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+  // Network-first so deploys show up immediately; fall back to cache when offline.
+  event.respondWith(fetch(event.request).then(response => {
     if (response && response.ok && new URL(event.request.url).origin === self.location.origin) {
       const copy = response.clone(); caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
     }
     return response;
-  }).catch(() => caches.match('/'))));
+  }).catch(() => caches.match(event.request).then(c => c || caches.match('/'))));
 });

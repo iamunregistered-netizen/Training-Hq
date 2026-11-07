@@ -49,8 +49,10 @@
 
   async function post(payload) {
     let res;
+    const key = localStorage.getItem('trainingHQ_syncKey') || '';
+    const hdr = { 'Content-Type': 'application/json' }; if (key) hdr.Authorization = 'Bearer ' + key;
     const ac = new AbortController(), to = setTimeout(() => ac.abort(), 20000);
-    try { res = await fetch('/api/sync', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), credentials: 'same-origin', redirect: 'manual', signal: ac.signal }); }
+    try { res = await fetch('/api/sync', { method: 'POST', headers: hdr, body: JSON.stringify(payload), credentials: 'same-origin', redirect: 'manual', signal: ac.signal }); }
     catch (e) { throw ac.signal.aborted ? { http: 'timed out after 20s' } : { offline: true }; }
     finally { clearTimeout(to); }
     if (res.type === 'opaqueredirect' || res.status === 401 || res.status === 403 || !(res.headers.get('content-type') || '').includes('json')) throw { auth: true };
@@ -94,7 +96,7 @@
       if (manual) toast('Sync complete · sent ' + changes.length + ', received ' + applied.length);
     } catch (e) {
       let msg;
-      if (e.auth) { setStatus('⚠ Sign in again', 'Sign-in needed (server refused the request). Reload the page to log in, then sync again.'); msg = 'Sign-in needed — reload the page'; }
+      if (e.auth) { setStatus('⚠ Sign in again', 'Server refused the request. Enter the sync passcode above (or sign in with Cloudflare Access), then tap Sync now.'); msg = 'Refused — check passcode or sign-in'; }
       else if (e.offline) { setStatus('● Saved · offline, will sync later', 'Could not reach the server.'); msg = 'Could not reach the server'; }
       else { setStatus('⚠ Sync error', 'Sync failed (' + (e.http || e.message || 'unknown') + '). Your data is safe on this device.'); msg = 'Sync failed (' + (e.http || e.message || 'unknown') + ')'; }
       if (manual) toast(msg);
@@ -103,7 +105,8 @@
 
   const _save = save;
   save = function () { _save.apply(this, arguments); clearTimeout(timer); timer = setTimeout(() => syncNow(false), 4000); };
-  document.getElementById('syncNow')?.addEventListener('click', () => syncNow(true));
+  window.thqSync = () => { toast('Syncing…'); try { const k = document.getElementById('syncKey'); if (k && k.value.trim()) { localStorage.setItem('trainingHQ_syncKey', k.value.trim()); k.value = ''; k.placeholder = 'Passcode saved on this device'; } syncNow(true).catch(e => setStatus('⚠ Sync error', 'Sync crashed: ' + (e && e.message || e))); } catch (e) { setStatus('⚠ Sync error', 'Sync crashed: ' + (e && e.message || e)); } };
+  if (localStorage.getItem('trainingHQ_syncKey')) { const k = document.getElementById('syncKey'); if (k) k.placeholder = 'Passcode saved on this device'; }
   document.addEventListener('visibilitychange', () => { if (!document.hidden) syncNow(false); });
   window.addEventListener('online', () => syncNow(false));
   setInterval(() => { if (!document.hidden) syncNow(false); }, 60000);
