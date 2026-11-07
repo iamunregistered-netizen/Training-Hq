@@ -49,15 +49,18 @@
 
   async function post(payload) {
     let res;
-    try { res = await fetch('/api/sync', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), credentials: 'same-origin', redirect: 'manual' }); }
-    catch (e) { throw { offline: true }; }
+    const ac = new AbortController(), to = setTimeout(() => ac.abort(), 20000);
+    try { res = await fetch('/api/sync', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), credentials: 'same-origin', redirect: 'manual', signal: ac.signal }); }
+    catch (e) { throw ac.signal.aborted ? { http: 'timed out after 20s' } : { offline: true }; }
+    finally { clearTimeout(to); }
     if (res.type === 'opaqueredirect' || res.status === 401 || res.status === 403 || !(res.headers.get('content-type') || '').includes('json')) throw { auth: true };
     if (!res.ok) throw { http: res.status };
     return res.json();
   }
 
   async function syncNow(manual) {
-    if (busy) return; if (!navigator.onLine) return setStatus('● Saved · offline, will sync later');
+    if (busy) { if (manual) toast('A sync is already running…'); return; }
+    if (!navigator.onLine) { setStatus('● Saved · offline, will sync later'); if (manual) toast('Offline — will sync when you reconnect'); return; }
     busy = true; setStatus('↻ Syncing…');
     try {
       if (!meta.init) {
@@ -82,16 +85,19 @@
       for (let i = 0; i < changes.length; i += 200) await post({ changes: changes.slice(i, i + 200), pull: false });
       const out = await post({ since: meta.since, changes: [] });
       const applied = applyRemote(out.records);
+      if (manual) await new Promise(r => setTimeout(r, 500));
       meta.hashes = sent;
       applied.forEach(a => { if (a.deleted) delete meta.hashes[a.key]; });
       if (applied.length) { const s2 = snapshot(); applied.forEach(a => { if (s2[a.key]) meta.hashes[a.key] = hash(s2[a.key]); }); }
       meta.since = out.serverTime; persist();
-      setStatus('● Synced', 'Synced ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + (applied.length ? ' · ' + applied.length + ' update(s) received' : ''));
-      if (manual) toast('Sync complete');
+      setStatus('● Synced', 'Synced ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · sent ' + changes.length + ' · received ' + applied.length);
+      if (manual) toast('Sync complete · sent ' + changes.length + ', received ' + applied.length);
     } catch (e) {
-      if (e.auth) setStatus('⚠ Sign in again', 'Sign-in needed — reload the page to log in, then sync again.');
-      else if (e.offline) setStatus('● Saved · offline, will sync later');
-      else setStatus('⚠ Sync error', 'Sync failed (' + (e.http || e.message || 'unknown') + '). Your data is safe on this device.');
+      let msg;
+      if (e.auth) { setStatus('⚠ Sign in again', 'Sign-in needed (server refused the request). Reload the page to log in, then sync again.'); msg = 'Sign-in needed — reload the page'; }
+      else if (e.offline) { setStatus('● Saved · offline, will sync later', 'Could not reach the server.'); msg = 'Could not reach the server'; }
+      else { setStatus('⚠ Sync error', 'Sync failed (' + (e.http || e.message || 'unknown') + '). Your data is safe on this device.'); msg = 'Sync failed (' + (e.http || e.message || 'unknown') + ')'; }
+      if (manual) toast(msg);
     } finally { busy = false; }
   }
 
