@@ -5,6 +5,11 @@ const UPSERT = `INSERT INTO records (kind,id,data,updated_at,deleted,server_time
     deleted=excluded.deleted, server_time=excluded.server_time
   WHERE excluded.updated_at > records.updated_at`;
 
+function safeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  let d = 0; for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return d === 0;
+}
 let ready = false;
 async function ensureSchema(env) {
   if (ready) return;
@@ -24,7 +29,10 @@ export default {
     if (url.pathname === '/api/sync') {
       if (request.method !== 'POST') return new Response('Method not allowed', { status: 405 });
       // Safety net: Cloudflare Access adds this header. Set ALLOW_NO_AUTH=1 only for local dev.
-      if (!request.headers.get('Cf-Access-Jwt-Assertion') && env.ALLOW_NO_AUTH !== '1')
+      // Allowed if: Cloudflare Access signed the request, OR the caller sends the SYNC_KEY secret as a Bearer token.
+      const auth = request.headers.get('Authorization') || '';
+      const keyOk = !!env.SYNC_KEY && safeEqual(auth, 'Bearer ' + env.SYNC_KEY);
+      if (!keyOk && !request.headers.get('Cf-Access-Jwt-Assertion') && env.ALLOW_NO_AUTH !== '1')
         return new Response('Sign-in required', { status: 401 });
       return sync(request, env);
     }
