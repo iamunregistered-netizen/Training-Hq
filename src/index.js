@@ -31,9 +31,12 @@ export default {
       // Safety net: Cloudflare Access adds this header. Set ALLOW_NO_AUTH=1 only for local dev.
       // Allowed if: Cloudflare Access signed the request, OR the caller sends the SYNC_KEY secret as a Bearer token.
       const auth = request.headers.get('Authorization') || '';
-      const keyOk = !!env.SYNC_KEY && safeEqual(auth, 'Bearer ' + env.SYNC_KEY);
+      const secret = (env.SYNC_KEY || '').trim(), token = auth.replace(/^Bearer\s+/i, '').trim();
+      const keyOk = !!secret && safeEqual(token, secret);
       if (!keyOk && !request.headers.get('Cf-Access-Jwt-Assertion') && env.ALLOW_NO_AUTH !== '1')
-        return new Response('Sign-in required', { status: 401 });
+        return Response.json({ error: !env.SYNC_KEY ? 'SYNC_KEY is not set on the Worker (secret missing or not deployed)'
+          : !auth ? 'No passcode was sent by the app'
+          : 'Passcode does not match the SYNC_KEY secret' }, { status: 401 });
       return sync(request, env);
     }
     return env.ASSETS.fetch(request);
