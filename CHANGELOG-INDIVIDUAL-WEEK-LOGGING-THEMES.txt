@@ -1,0 +1,27 @@
+Training HQ – requested program and logging updates
+
+1. Program weeks
+- Added per-program week renaming.
+- Added deletion of an individual program week. Remaining program week plans and custom week labels are shifted to close the gap.
+- Historical workout logs are intentionally retained with their original week numbers.
+- Week selectors and progression navigation now respect the program's configured week count.
+
+2. Progression engine
+- Selecting a built-in or custom progression engine materialises the calculated weekly prescriptions into the program's week plans.
+- The week plans are then used by program editing and workout logging, so prescribed sets, reps, percentages and kg loads are visible in the actual week.
+- Per-exercise next-week load increases update the following saved week plan as well as the progression override record.
+
+3. Program themes
+- Added Mint, Ocean, Violet, Amber, Rose and Graphite colour schemes.
+- Each program stores its own selected theme; switching programs applies that program's palette.
+
+4. Exercise logging
+- Removed the Start workout button.
+- Each planned exercise now has its own Log / Edit log action.
+- The logging screen opens only the selected exercise, allowing it to be checked off and saved independently.
+- Existing exercise-level history, set logging, photos, timers and treadmill metrics remain supported.
+
+Implementation notes
+- Runtime files updated: public/app.js and public/index.html.
+- Existing local data schema remains version 1; new program fields are additive and backward-compatible.
+- Existing workout history is not deleted when a program week is deleted.
