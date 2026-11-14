@@ -1,0 +1,8 @@
+Training HQ v36 — Exercise-specific planning editor
+
+- Fixed planning exercise selection so it opens a focused exercise editor rather than the full day editor.
+- The focused editor displays only the selected exercise and its full prescription controls, including progressive-ramp set rows.
+- Session metadata and other exercises are hidden while editing one exercise.
+- Saving writes the edited exercise back into the existing day/week plan and preserves all other exercises and session settings.
+- The full day editor remains available from the day-level edit control.
+- Service-worker cache bumped to v36.
