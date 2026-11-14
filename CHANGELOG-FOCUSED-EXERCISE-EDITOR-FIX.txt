@@ -1,0 +1,8 @@
+Training HQ v37 — Focused exercise editor correction
+
+- In exercise-specific planning mode, render only the selected exercise editor.
+- Open the selected exercise's editable prescription fields immediately.
+- Hide day/session metadata and the add-exercise control in focused mode.
+- Save only the selected exercise back into its original position; preserve every other exercise and session setting.
+- Full-day editing remains unchanged.
+- Service-worker cache bumped to v37.
