@@ -1,0 +1,25 @@
+Training HQ – follow-up interface and progression updates
+
+1. Progressive ramp progression
+- The selected built-in or custom progression engine now populates each set row in a progressive ramp.
+- Explicit per-set kilogram values are scaled by the engine; blank set loads inherit the exercise's programmed kg or percentage-derived reference load.
+- Custom fixed kg changes are applied to each ramp set. Volume changes also adjust the number of ramp rows.
+- Existing generated week plans are upgraded once on load without replacing non-ramp exercise edits.
+
+2. Planning layout
+- The seven training days are displayed as horizontally scrollable day cards.
+- Every planned exercise is listed in its day card, rather than truncating the list after four exercises.
+- Selecting an exercise opens the day editor with that specific exercise expanded. Other exercise editors remain collapsed until selected.
+- Day-level details remain editable separately.
+
+3. Logging control
+- Removed the non-actionable LOAD label from the exercise list.
+- The logger also removes any legacy inert button whose exact label is “Load”.
+- The existing suggested kg values remain visible in the set fields.
+
+4. Settings and progress
+- Settings and progress cards are now compact, collapsible panels to reduce vertical scrolling.
+- Panel contents and existing controls remain in place; expand only the section being used.
+
+5. Cache
+- Service-worker cache version incremented to v34 so the updated app files are fetched after deployment.
