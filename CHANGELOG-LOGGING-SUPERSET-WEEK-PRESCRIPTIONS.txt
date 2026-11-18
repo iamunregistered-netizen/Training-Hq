@@ -1,0 +1,8 @@
+Training HQ v38 — Logging workflow improvements
+
+- Selecting an exercise that belongs to a superset now opens both exercises in that superset in the logging window.
+- Superset exercises can be checked off independently; checking one no longer forces its partner to the same state.
+- Removed the explanatory "Enter actual work completed..." notice from workout logging.
+- Each exercise logging card now shows the previous week's and next week's prescribed sets/reps and loads when those week plans exist.
+- Completing every set row with its set check button automatically checks "Mark exercise complete" for that exercise; unchecking a set clears the exercise completion state.
+- Service-worker cache bumped to v38.
