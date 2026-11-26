@@ -1,0 +1,7 @@
+Training HQ v41 — Logging drag reorder fix
+
+- Reworked drag interaction to use document-level pointer movement and element-under-pointer targeting.
+- Pointer capture remains on the drag handle; movement is tracked outside the list container for more reliable touch/mouse behavior.
+- Added larger touch target, clearer handle icon and active/drop feedback.
+- Reordering remains confined to the logging overview DOM; saveWorkout reads current card order.
+- Cache bumped to v41.
