@@ -1,0 +1,1 @@
+v40: Logging overview drag reorder switched to touch/mouse pointer drag with an explicit grip handle on each exercise card.
