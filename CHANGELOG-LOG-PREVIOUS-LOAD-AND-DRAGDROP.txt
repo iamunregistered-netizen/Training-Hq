@@ -1,0 +1,5 @@
+Training HQ v39
+- Log set weights and reps now prefill from the most recent prior-week logged sets for the same program/day/exercise.
+- Set prescription fallback remains in place when prior logs are unavailable.
+- Workout log exercise cards support drag-and-drop reordering within the logging window.
+- Service-worker cache bumped to v39.
