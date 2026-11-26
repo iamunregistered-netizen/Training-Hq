@@ -1,8 +1,0 @@
-Training HQ update — collapsible program controls and focused exercise editing
-
-- Active program selector, week controls, theme selector and program actions are now grouped in a collapsible Active program panel.
-- Progression engine controls and week details are now grouped in a separate collapsible panel.
-- Clicking an individual exercise in the horizontal weekly planner opens a dedicated exercise editor modal rather than the full-day editor.
-- The focused editor supports exercise name, role, sets, reps/target, units, programmed load, next-week increase, rest, duration and progressive-ramp set prescriptions.
-- Saving updates only the selected exercise in the selected week. Removing an exercise removes only that exercise from the selected day's plan.
-- Service-worker cache bumped to v35.
