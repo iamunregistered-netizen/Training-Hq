@@ -1,5 +1,5 @@
-const CACHE_NAME = 'training-hq-v45';
-const APP_FILES = ['/', './manifest.json', './icon-192.png', './icon-512.png', './app.js', './sync.js'];
+const CACHE_NAME = 'training-hq-v46';
+const APP_FILES = ['/', './manifest.json', './icon-192.png', './icon-512.png', './app.js', './sync.js', './styles.css'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
 });
