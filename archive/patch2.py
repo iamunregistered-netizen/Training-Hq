@@ -1,0 +1,14 @@
+from pathlib import Path
+p=Path('/mnt/data/thqwork/public/index.html');s=p.read_text()
+s=s.replace("durationSeconds:Math.max(0,Number(el.querySelector('[data-k=durationSeconds]').value)||0)})).filter(x=>x.name)","durationSeconds:Math.max(0,Number(el.querySelector('[data-k=durationSeconds]').value)||0),supersetGroup:el.dataset.supersetGroup||''})).filter(x=>x.name)")
+s=s.replace("function itemEditorHTML(it,i){return `<div class=\"edititem\" style=", "function itemEditorHTML(it,i){return `<div class=\"edititem\" data-superset-group=\"${esc(it.supersetGroup||'')}\" style=")
+s=s.replace('<span class="muted small">Drag to reorder</span></div>', '<span class="muted small">Drag to reorder</span><button type="button" class="btn" data-create-superset style="padding:6px 9px;font-size:11px">＋ Superset</button></div>')
+s=s.replace("editItems.onclick=e=>{const b=e.target.closest('[data-remove-item]');if(b)b.closest('.edititem').remove()};let dragItem=null;", "editItems.onclick=e=>{const b=e.target.closest('[data-remove-item]');if(b){b.closest('.edititem').remove();return}const sup=e.target.closest('[data-create-superset]');if(sup)createSupersetPartner(sup.closest('.edititem'),editItems)};function createSupersetPartner(card,container){if(!card)return;if(card.dataset.supersetGroup){toast('This exercise is already in a superset');return}const group='ss-'+Date.now()+'-'+Math.random().toString(36).slice(2,6);card.dataset.supersetGroup=group;const source={name:'',sets:Number(card.querySelector('[data-k=sets]').value)||3,reps:card.querySelector('[data-k=reps]').value||'10',loadKg:0,loadIncrementKg:0,restTimes:card.querySelector('[data-k=restTimes]').value||'',durationSeconds:0,supersetGroup:group};card.insertAdjacentHTML('afterend',itemEditorHTML(source,container.children.length));const partner=card.nextElementSibling;partner.dataset.supersetGroup=group;partner.querySelector('[data-k=name]').focus();toast('Superset partner added — enter the secondary exercise')}let dragItem=null;")
+# Display superset styling in log and store group on card
+s=s.replace("return `<div class=\"exercise ${isDone?'exercise-done':''}\" data-name=", "return `<div class=\"exercise ${isDone?'exercise-done':''} ${it.supersetGroup?'superset-exercise':''}\" data-superset-group=\"${esc(it.supersetGroup||'')}\" data-name=")
+s=s.replace('<strong>${esc(it.name)}</strong><div class="prescription">Planned:', '<strong>${it.supersetGroup?\'<span class="superset-tag">SUPERSET</span> \':\'\'}${esc(it.name)}</strong><div class="prescription">Planned:')
+# WOD logs should be counted in history and distinguish visually; existing generic logs suffice
+p.write_text(s)
+# app.js is not the served asset, keep it as source mirror of page script for consistency
+script=s[s.rfind('<script>')+8:s.rfind('</script>')]
+Path('/mnt/data/thqwork/app.js').write_text(script)

@@ -1,0 +1,24 @@
+Training HQ — Updated workflow package
+
+Deploy this package to the existing Cloudflare Worker, keeping the current Worker URL and OAuth configuration. Before deploying, export a JSON backup from Training HQ and keep it somewhere safe.
+
+The app keeps the existing localStorage key `trainingHQ_v1`; do not clear site data or uninstall the PWA. Upload/commit the package contents while preserving the repository layout (`public/`, `src/`, `wrangler.jsonc`). The updated service-worker cache is v5.
+
+New features:
+- Exercise completion checkboxes persist per program/week/day/exercise, highlight completed exercises, and are included in app backups.
+- Per-exercise “Next-week increase (kg)” controls opt-in load progression. Saving a workout applies the heaviest entered working weight plus the configured increment to the following week only. Set increment to 0 to disable.
+- Google Drive has a combined “Connect & back up” button and a separate “Restore from Drive…” button. Restore asks before replacing local data.
+
+After deployment, open the existing app URL and check:
+1. Existing programs and history are still present.
+2. Mark an exercise complete, close/reopen the workout, and verify the checkbox remains checked and the card is highlighted.
+3. Configure a small next-week increase for a test exercise, log a working weight, then view the next week and verify the programmed load.
+4. Test Google Drive backup and restore only after exporting a local backup.
+
+The JavaScript syntax and package structure were checked. A live browser test and end-to-end Google OAuth test were not possible in this build environment. Do not deploy to production until you are comfortable with the local backup and test checklist.
+
+FRONT-PAGE COMPLETION HIGHLIGHT
+The Home/front-page planned exercise rows now highlight green and show DONE when that exercise has a completed log for the selected program, week, and day. To deploy this update, replace the existing project files with the contents of this ZIP and deploy through your usual Cloudflare workflow. Export a JSON backup first. Do not clear browser storage.
+
+CUSTOM PROGRESSION ENGINE — KG OR INTENSITY
+The custom 12-week progression editor now includes a per-week “Load change kg” field. Leave it at 0 to use the existing Intensity (%) multiplier. Enter a non-zero kg value to add that amount to the exercise's programmed kilogram load for that week; when a kg change is entered, it takes precedence over intensity scaling for that week. Negative values can be used for a reduction/deload. Volume (%) still scales the prescribed number of sets. This is applied to the future prescription only; it does not rewrite saved workout logs.

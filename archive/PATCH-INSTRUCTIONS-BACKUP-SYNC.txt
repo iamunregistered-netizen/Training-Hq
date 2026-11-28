@@ -1,0 +1,20 @@
+TRAINING HQ — BACKUP & SYNC UPDATE
+
+1. Export a JSON backup from your current Training HQ before deployment.
+2. Extract this ZIP.
+3. Replace the matching files in your existing Cloudflare project with the files in this package. Keep your existing Cloudflare account, Worker name and OAuth client configuration.
+4. Deploy the Worker.
+5. Open Training HQ > Settings > Backup & sync.
+6. Confirm your existing Google OAuth Web Client ID is present. If not, enter it.
+7. Select Connect Google Drive and approve the requested Drive access. A first backup is uploaded immediately.
+8. Leave Automatic backup enabled. Changes are uploaded about two minutes after the last save while the app is open.
+9. Test Back up now, then check Google Drive for Training HQ Backup.json and a dated daily snapshot.
+
+RESTORE
+- Select Restore from Drive. The app downloads a safety JSON export first, asks for confirmation, validates the Drive backup, then replaces local data.
+- Do not clear browser storage during deployment.
+
+LIMITATIONS
+- Browser OAuth tokens are not stored permanently. Google may ask you to reconnect after closing/reopening the app.
+- The browser cannot back up while the app is fully closed. This update is not a server-side scheduled backup.
+- Daily snapshots currently accumulate; delete older snapshots manually in Google Drive if desired.
