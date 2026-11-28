@@ -11,6 +11,12 @@ Offline-first training planner, deployed on Cloudflare Workers (`wrangler.jsonc`
 - `tests/` — checks (below)
 - `archive/` — retired patch scripts and stale copies; not deployed
 
+## Plan page features
+- Weekly plan scrolls sideways (day chips jump; today is highlighted); week ‹ › arrows; per-day **Copy…** and **Duplicate week**.
+- `±` on an exercise row opens a quick editor for sets / reps / load; drag handles and ↑/↓ reorder.
+- Day editor: ‹ / › (or swipe the bar) saves and switches day. Removing an exercise, saving a day, reordering, copying and duplicating a week all offer **Undo** in the toast.
+- Edits to weeks 2+ go through `mutableDayPlan()`, which materialises the week so changes persist.
+
 ## Checks
     node tests/check-templates.mjs        # no dependencies; verifies HTML templates have balanced tags
     python3 tests/day-editor.e2e.py       # needs: pip install playwright && playwright install chromium
