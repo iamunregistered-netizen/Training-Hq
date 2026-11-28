@@ -17,9 +17,17 @@ Offline-first training planner, deployed on Cloudflare Workers (`wrangler.jsonc`
 - Day editor: ‹ / › (or swipe the bar) saves and switches day. Removing an exercise, saving a day, reordering, copying and duplicating a week all offer **Undo** in the toast.
 - Edits to weeks 2+ go through `mutableDayPlan()`, which materialises the week so changes persist.
 
+## Workout & progress tools (`public/tools.js`)
+Loaded after `app.js`; it wraps `openWorkout`, `saveWorkout`, `closeModal`, `renderProgram`, `renderProgress` and `renderSettings` rather than editing them.
+- **Logging:** last-time values with "Use these", floating rest timer (default rest, ±15 s, sound), screen wake lock, plate calculator, swap an exercise for today / in the plan.
+- **Progress:** records (heaviest, est. 1RM, rep bests) with "New PR" on save, calendar heatmap + week streaks, volume by muscle group, bodyweight log.
+- **Plan:** Deload copy of a week. Tool settings (bar, plates, default rest, wake lock, sound) are in Settings.
+- Log dates use the device's local date (`localISODate()`), not UTC.
+
 ## Checks
     node tests/check-templates.mjs        # no dependencies; verifies HTML templates have balanced tags
     python3 tests/day-editor.e2e.py       # needs: pip install playwright && playwright install chromium
+    python3 tests/training-tools.e2e.py   # tools.js features + local-date fix
                                           # set CHROME=/path/to/chrome to use an existing browser
 
 Run both before deploying. The first would have caught the stray `</div>` that broke "Add exercise".
